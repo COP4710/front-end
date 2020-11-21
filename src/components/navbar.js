@@ -7,9 +7,14 @@ import '../App.css'
 export class EventNavbar extends React.Component {
     constructor(props){
         super(props)
+
+        this.state ={
+            loggedIn: this.props.loggedState
+        }
     }
 
     render() {
+        console.log(this.state.loggedIn)
         return (
             <Navbar className='navbar-top' bg='dark' variant='dark'>
                 <Nav className='container-fluid'>

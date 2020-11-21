@@ -25,7 +25,7 @@ export class App extends React.Component {
     return (
       <Router>
         <div className="App">
-            <EventNavbar/>
+            <EventNavbar loggedState={this.state.loggedIn}/>
             <Switch>
               <Route exact path="/" component={Home}/>
               <Route exact path="/createevent" component={CreateEvent}/>
