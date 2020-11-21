@@ -24,7 +24,7 @@ export class EventNavbar extends React.Component {
                         </Navbar.Brand>
                     </Nav.Item>
                     <Nav.Item className='login-button'>
-                        <Button href='/' variant="primary">Login</Button>
+                        <Button href='/login' variant="primary">Login</Button>
                     </Nav.Item>
                 </Nav>
             </Navbar>

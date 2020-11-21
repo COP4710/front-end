@@ -10,6 +10,7 @@ import React from 'react'
 
 import Home from './pages/Home'
 import CreateEvent from './pages/CreateEvent'
+import Login from './pages/Login'
 import './App.css';
 
 export class App extends React.Component {
@@ -29,6 +30,7 @@ export class App extends React.Component {
             <Switch>
               <Route exact path="/" component={Home}/>
               <Route exact path="/createevent" component={CreateEvent}/>
+              <Route exact path="/login" component={Login}/>
             </Switch>
         </div>
       </Router>
