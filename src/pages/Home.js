@@ -6,6 +6,8 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 
+import EventComponent from '../components/EventComponent'
+
 import '../App.css';
 import { Link, Redirect } from 'react-router-dom';
 import { Col, Container, Form, Row } from 'react-bootstrap'
@@ -88,6 +90,7 @@ export class Home extends React.Component {
                         </Col>
                     </Row>
                 </Container>
+                <EventComponent/>
             </div>
         );
     }
