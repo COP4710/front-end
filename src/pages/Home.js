@@ -8,7 +8,7 @@ import FormControl from 'react-bootstrap/FormControl'
 
 import '../App.css';
 import { Link, Redirect } from 'react-router-dom';
-import { Col, Container, Row } from 'react-bootstrap'
+import { Col, Container, Form, Row } from 'react-bootstrap'
 
 export class Home extends React.Component {
 
@@ -16,10 +16,12 @@ export class Home extends React.Component {
         super(props)
 
         this.state = {
-            redirect: false
+            redirect: false,
+            SearchType: "Date"
         }
 
         this.handleClick = this.handleClick.bind(this)
+        this.onChange = this.onChange.bind(this)
     }
 
     handleClick() {
@@ -28,12 +30,34 @@ export class Home extends React.Component {
         )
     }
 
+    onChange = event => {
+        var value = event.target.value
+        this.setState({[event.target.name]: value})
+    }
+
     render() {
         if(this.state.redirect)
         {
             return <Redirect to='/createevent'/>
         }
-
+        
+        var searchBar;
+        if(this.state.SearchType == "Date") {
+            searchBar = <FormControl
+                        aria-label="Default"
+                        aria-describedby="inputGroup-sizing-default"
+                        />
+        } else if(this.state.SearchType == "Location"){
+            // Implement: Add Get Locations from API Here
+            searchBar = <FormControl
+                        aria-label="Default"
+                        aria-describedby="inputGroup-sizing-default"
+                        as="select"
+                        >
+                            <option>Amway</option>
+                            <option>Test</option>
+                        </FormControl>
+        }
 
         return (
             <div>
@@ -44,20 +68,19 @@ export class Home extends React.Component {
                 <Container fluid>
                     <Row>
                         <Col>
-                            <DropdownButton as={ButtonGroup} title="Search Options" id="bg-vertical-dropdown-1">
-                                <Dropdown.Item eventKey="1">Location</Dropdown.Item>
-                                <Dropdown.Item eventKey="2">Time</Dropdown.Item>
-                            </DropdownButton>
+                            <Form.Control name="SearchType" as="select" defaultValue="Date" onChange={this.onChange}>
+                                <option>Date</option>
+                                <option>Location</option>
+                            </Form.Control>
                         </Col>
                         <Col>
                             <InputGroup className="mb-3">
                                 <InputGroup.Prepend>
-                                <InputGroup.Text id="inputGroup-sizing-default">Name</InputGroup.Text>
+                                    <InputGroup.Text id="inputGroup-sizing-default">
+                                        {this.state.SearchType}
+                                    </InputGroup.Text>
                                 </InputGroup.Prepend>
-                                <FormControl
-                                aria-label="Default"
-                                aria-describedby="inputGroup-sizing-default"
-                                />
+                                {searchBar}
                             </InputGroup>
                         </Col>
                         <Col>
