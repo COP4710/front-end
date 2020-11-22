@@ -19,10 +19,12 @@ export class App extends React.Component {
 
     this.state = {
       loggedIn: localStorage.getItem('login'),
-      username: localStorage.getItem('username')
+      username: localStorage.getItem('username'),
+      events: []
     }
 
     this.accountChange = this.accountChange.bind(this)
+    this.onEventCreated = this.onEventCreated.bind(this)
   }
 
   accountChange(dataIn) {
@@ -30,26 +32,44 @@ export class App extends React.Component {
       localStorage.setItem('login', true)
       localStorage.setItem('username', dataIn.username)
       localStorage.setItem('password', dataIn.password)
+      localStorage.setItem('permissionLevel', dataIn.permissionLevel)
 
     } else {
       localStorage.setItem('login', false)
       localStorage.removeItem('username')
       localStorage.removeItem('password')
+      localStorage.removeItem('permissionLevel')
     }
 
     this.setState({loggedIn: localStorage.getItem('login')})
     this.setState({username: localStorage.getItem('username')})
     this.setState({password: localStorage.getItem('password')})
+    this.setState({permissionLevel: localStorage.getItem('permissionLevel')})
+  }
+
+  onEventCreated(dataIn) {
+    this.setState({
+      events: [...this.state.events, dataIn]
+    })
   }
 
   render() {
+
+    console.log(this.state.events)
     return (
       <Router>
         <div className="App">
             <EventNavbar loggedState={this.state.loggedIn} username={this.state.username} onAccountChanged={this.accountChange}/>
             <Switch>
-              <Route exact path="/" component={Home}/>
-              <Route path="/createevent" component={CreateEvent}/>
+              <Route exact path="/">
+                <Home events={this.state.events}/>
+              </Route>
+              <Route path="/createevent">
+                <CreateEvent 
+                  username={this.state.username} permissionLevel={this.state.permissionLevel}
+                  onEventCreated={this.onEventCreated}
+                />
+              </Route>
               <Route path="/login">
                 <Login loggedState={this.state.loggedIn} onAccountChanged={this.accountChange}/>
               </Route>

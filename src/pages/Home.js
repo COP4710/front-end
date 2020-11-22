@@ -1,15 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Button from 'react-bootstrap/Button'
-import DropdownButton from 'react-bootstrap/DropdownButton'
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
-import Dropdown from 'react-bootstrap/Dropdown'
 import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
-
 import EventComponent from '../components/EventComponent'
-
 import '../App.css';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { Col, Container, Form, Row } from 'react-bootstrap'
 
 export class Home extends React.Component {
@@ -59,6 +54,15 @@ export class Home extends React.Component {
         //                     <option>Test</option>
         //                 </FormControl>
         // }
+        var eventList = this.props.events
+        var eventComponents = (
+            <div>
+                {eventList.map(event => <EventComponent key={event.eventName} 
+                eventName={event.eventName} eventLocation={event.location} eventStartTime={event.start_time}
+                eventEndTime={event.end_time} eventEmail={event.email} eventPhone={event.phone}
+                eventDate={event.date}/>)}
+            </div>
+        )
 
         return (
             <div>
@@ -86,7 +90,7 @@ export class Home extends React.Component {
                         </Col>
                     </Row>
                 </Container>
-                <EventComponent/>
+                {eventComponents}
             </div>
         );
     }
