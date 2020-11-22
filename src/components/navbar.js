@@ -1,4 +1,5 @@
 import {Navbar, Nav, Button} from 'react-bootstrap'
+import {Redirect} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {Component} from 'react'
 import App from '../App'
@@ -8,17 +9,46 @@ export class EventNavbar extends React.Component {
     constructor(props){
         super(props)
 
-        this.state ={
-            loggedIn: this.props.loggedState
+        this.state = {
+            redirectHome: false
+        }
+
+        this.onClick = this.onClick.bind(this)
+    }
+
+    onClick = event => {
+        if(event.target.name == "LogoutButton")
+        {
+            const data = {
+                login: false
+            } 
+
+            this.props.onAccountChanged(data)
+            this.setState({redirectHome: true})
         }
     }
 
     render() {
+        // var test = JSON.parse(this.props.data)
+        // console.log(test)
+
+        var welcomeText = 'Welcome'
+        if(this.props.loggedState == "true") {
+            welcomeText += " " + this.props.username
+        }
+        welcomeText += "!"
+
         var loginButton;
-        if(this.state.loggedIn) {
-            loginButton = <Button href='/' variant="primary">Log out</Button>
+        if(this.props.loggedState == "true") {
+            loginButton = <Button name="LogoutButton" href="/"
+                            variant="primary" onClick={this.onClick}>Log out</Button>
         } else {
-            loginButton = <Button href='/login' variant="primary">Login</Button>
+            loginButton = <Button name="LoginButton" href="/login" 
+                            variant="primary">Login</Button>
+        }
+
+        if(this.state.redirectHome) {
+            return (<Redirect href='/'/>)
         }
 
         return (
@@ -29,7 +59,8 @@ export class EventNavbar extends React.Component {
                             Event System
                         </Navbar.Brand>
                     </Nav.Item>
-                    <Nav.Item className='login-button'>
+                    <Nav.Item>
+                        <Navbar.Brand>{welcomeText}</Navbar.Brand>
                         {loginButton}
                     </Nav.Item>
                 </Nav>

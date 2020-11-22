@@ -11,11 +11,14 @@ export class Login extends React.Component{
 
         this.state = {
             redirect: false,
-            register: false
+            register: false,
+            usernameBox: "",
+            passwordBox: ""
         }
 
         this.handleChange = this.handleChange.bind(this)
         this.onClickRegister = this.onClickRegister.bind(this)
+
     }
 
     handleChange = event => {
@@ -31,12 +34,27 @@ export class Login extends React.Component{
             regisVal = false;
         }
         this.setState({register: regisVal})
+
+        if(event.target.name == "LoginButton") {
+            const data = {
+                login: true,
+                username: this.state.usernameBox,
+                password: this.state.passwordBox
+            }
+
+            // if this.state.register is false, then login endpoint
+            // if true, then create user endpoint
+
+            this.props.onAccountChanged(data);
+
+            this.setState({usernameBox: ""})
+            this.setState({passwordBox: ""})
+
+            this.setState({redirect: true})
+        }
     }
 
     render() {
-    if(this.state.redirect)
-        return <Redirect to='/'/>
-
     var title = "Login"
     var loginButton = "Login"
     var newUserButton;
@@ -52,6 +70,9 @@ export class Login extends React.Component{
                         variant="link">Register as New User</Button>
     }
 
+    if(this.state.redirect)
+        return <Redirect to="/"/>
+
     return (
         <div className="create-appoint-section border border-dark">
             <h1>{title}</h1>
@@ -60,13 +81,17 @@ export class Login extends React.Component{
                 <Form.Group as={Row}>
                     <Col>
                         <Form.Label column >Username:</Form.Label>
-                        <Form.Control type="text"></Form.Control>
+                        <Form.Control name="usernameBox" type="text" 
+                            value={this.state.usernameBox} 
+                            onChange={this.handleChange}></Form.Control>
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row}>
                     <Col>
                         <Form.Label column >Password:</Form.Label>
-                        <Form.Control type="text"></Form.Control>
+                        <Form.Control name="passwordBox" type="text" 
+                            value={this.state.passwordBox} 
+                            onChange={this.handleChange}></Form.Control>
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row}>
