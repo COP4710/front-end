@@ -43,46 +43,42 @@ export class Home extends React.Component {
             return <Redirect to='/createevent'/>
         }
         
-        var searchBar;
-        if(this.state.SearchType == "Date") {
-            searchBar = <FormControl
-                        aria-label="Default"
-                        aria-describedby="inputGroup-sizing-default"
-                        />
-        } else if(this.state.SearchType == "Location"){
-            // Implement: Add Get Locations from API Here
-            searchBar = <FormControl
-                        aria-label="Default"
-                        aria-describedby="inputGroup-sizing-default"
-                        as="select"
-                        >
-                            <option>Amway</option>
-                            <option>Test</option>
-                        </FormControl>
-        }
+        // var searchBar;
+        // if(this.state.SearchType == "Date") {
+        //     searchBar = <FormControl aria-label="Default" 
+        //                 aria-describedby="inputGroup-sizing-default"
+        //                 />
+        // } else if(this.state.SearchType == "Location"){
+        //     // Implement: Add Get Locations from API Here
+        //     searchBar = <FormControl
+        //                 aria-label="Default"
+        //                 aria-describedby="inputGroup-sizing-default"
+        //                 as="select"
+        //                 >
+        //                     <option>Amway</option>
+        //                     <option>Test</option>
+        //                 </FormControl>
+        // }
 
         return (
             <div>
                 <h1>Home</h1>
+                <br/>
                 <Button onClick={this.handleClick}>Create Event</Button>
-
                 <p>What would you like to search by?</p>
                 <Container fluid>
                     <Row>
                         <Col>
-                            <Form.Control name="SearchType" as="select" defaultValue="Date" onChange={this.onChange}>
-                                <option>Date</option>
-                                <option>Location</option>
-                            </Form.Control>
-                        </Col>
-                        <Col>
                             <InputGroup className="mb-3">
                                 <InputGroup.Prepend>
-                                    <InputGroup.Text id="inputGroup-sizing-default">
-                                        {this.state.SearchType}
-                                    </InputGroup.Text>
+                                    <Form.Control name="SearchType" as="select" defaultValue="Date" onChange={this.onChange}>
+                                        <option>Date</option>
+                                        <option>Location</option>
+                                    </Form.Control>
                                 </InputGroup.Prepend>
-                                {searchBar}
+                                    <FormControl aria-label="Default" 
+                                    aria-describedby="inputGroup-sizing-default"
+                                    />
                             </InputGroup>
                         </Col>
                         <Col>

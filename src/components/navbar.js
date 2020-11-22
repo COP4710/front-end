@@ -14,7 +14,13 @@ export class EventNavbar extends React.Component {
     }
 
     render() {
-        console.log(this.state.loggedIn)
+        var loginButton;
+        if(this.state.loggedIn) {
+            loginButton = <Button href='/' variant="primary">Log out</Button>
+        } else {
+            loginButton = <Button href='/login' variant="primary">Login</Button>
+        }
+
         return (
             <Navbar className='navbar-top' bg='dark' variant='dark'>
                 <Nav className='container-fluid'>
@@ -24,7 +30,7 @@ export class EventNavbar extends React.Component {
                         </Navbar.Brand>
                     </Nav.Item>
                     <Nav.Item className='login-button'>
-                        <Button href='/login' variant="primary">Login</Button>
+                        {loginButton}
                     </Nav.Item>
                 </Nav>
             </Navbar>
