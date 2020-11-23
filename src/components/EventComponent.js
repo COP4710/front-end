@@ -12,7 +12,8 @@ export class EventComponent extends React.Component {
             <Card>
                 <Card.Title>{this.props.eventName} at {this.props.eventLocation}</Card.Title>
                 <Card.Body>
-                    <Card.Text>Event Date: {this.props.eventDate} From {this.props.eventStartTime} to {this.props.eventEndTime}</Card.Text>
+                    <Card.Text>{this.props.eventDescription}</Card.Text>
+                    <Card.Text>Event Date: {this.props.eventDate} - {this.props.eventEndDate} From {this.props.eventStartTime} to {this.props.eventEndTime}</Card.Text>
                     <Card.Text>Contact through email at {this.props.eventEmail} or call {this.props.eventPhone}</Card.Text>
                 </Card.Body>
             </Card>

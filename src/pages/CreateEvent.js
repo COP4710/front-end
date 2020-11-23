@@ -40,6 +40,7 @@ export class CreateEvent extends React.Component{
             start_time: this.state.eventStartTimeBox,
             end_time: this.state.eventEndTimeBox,
             date: this.state.eventDateBox,
+            end_date: this.state.eventEndDateBox,
         }
 
         this.props.onEventCreated(dataOut)
@@ -139,10 +140,16 @@ export class CreateEvent extends React.Component{
                 </Form.Group>
                 <Form.Group as={Row}>
                     <Form.Group as={Col}>
-                        <Form.Label >Date:</Form.Label>
+                        <Form.Label >Start date:</Form.Label>
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Control name="eventDateBox" onChange={this.handleChange} type="text"></Form.Control>
+                    </Form.Group>
+                    <Form.Group as={Col}>
+                        <Form.Label >End date:</Form.Label>
+                    </Form.Group>
+                    <Form.Group as={Col}>
+                        <Form.Control name="eventEndDateBox" onChange={this.handleChange} type="text"></Form.Control>
                     </Form.Group>
                 </Form.Group>
                 <Form.Group as={Row}>

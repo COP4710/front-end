@@ -58,9 +58,9 @@ export class Home extends React.Component {
         var eventComponents = (
             <div>
                 {eventList.map(event => <EventComponent key={event.eventName} 
-                eventName={event.eventName} eventLocation={event.location} eventStartTime={event.start_time}
-                eventEndTime={event.end_time} eventEmail={event.email} eventPhone={event.phone}
-                eventDate={event.date}/>)}
+                eventName={event.eventName} eventDescription={event.eventDescription} eventLocation={event.location} 
+                eventStartTime={event.start_time} eventEndTime={event.end_time} eventEmail={event.email}
+                eventPhone={event.phone} eventDate={event.date} eventEndDate={event.end_date}/>)}
             </div>
         )
 
