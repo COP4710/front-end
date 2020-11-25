@@ -19,11 +19,6 @@ export class CreateEvent extends React.Component{
 
     handleChange = event => {
         var value = event.target.value
-        if(["locationDropdown", "categoryDropdown"].includes(event.target.name)
-            && event.target.value == "Choose...")
-        {
-            value = null;
-        }
         this.setState({[event.target.name]: value})
     }
 
@@ -33,38 +28,19 @@ export class CreateEvent extends React.Component{
         var dataOut = {
             eventName: this.state.eventNameBox,
             eventDescription: this.state.eventDescriptionBox,
-            location: this.state.locationDropdown,
-            category: this.state.categoryDropdown,
+            eventURL: this.state.eventURLBox,
+            address: this.state.eventAddressBox,
+            city: this.state.eventCityBox,
             email: this.state.eventEmailBox,
             phone: this.state.eventPhoneBox,
-            start_time: this.state.eventStartTimeBox,
-            end_time: this.state.eventEndTimeBox,
             date: this.state.eventDateBox,
             end_date: this.state.eventEndDateBox,
+            eventOwner: this.props.username,
         }
 
         this.props.onEventCreated(dataOut)
 
         this.setState({redirect: true})
-    }
-
-    getCategories() {
-        return (
-            <React.Fragment>
-                <option>STEM</option>
-                <option>Party</option>
-            </React.Fragment>
-        )
-    }
-
-    getLocations() {
-        // Add a pull from the database
-        return (
-            <React.Fragment>
-                <option>Amway</option>
-                <option>CFE Arena</option>
-            </React.Fragment>
-        )
     }
 
     render() {
@@ -88,26 +64,24 @@ export class CreateEvent extends React.Component{
                         <Form.Control name="eventDescriptionBox" onChange={this.handleChange} type="text"></Form.Control>
                     </Col>
                 </Form.Group>
-                <Form.Group as={Row} >
+                <Form.Group as={Row}>
+                    <Form.Label column >URL:</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control name="eventURLBox" onChange={this.handleChange} type="text"></Form.Control>
+                    </Col>
+                </Form.Group>
+                <Form.Group as={Row}>
                     <Form.Group as={Col}>
-                        <Form.Label >Location:</Form.Label>
+                        <Form.Label >Address:</Form.Label>
                     </Form.Group>
                     <Form.Group as={Col}>
-                        <Form.Control name="locationDropdown" as="select" defaultValue="Choose..." 
-                            onChange={this.handleChange}>
-                            <option>Choose...</option>
-                            {this.getLocations()}
-                        </Form.Control>
+                        <Form.Control name="eventAddressBox" onChange={this.handleChange} type="text"></Form.Control>
                     </Form.Group>
                     <Form.Group as={Col}>
-                        <Form.Label>Category:</Form.Label>
+                        <Form.Label >City:</Form.Label>
                     </Form.Group>
                     <Form.Group as={Col}>
-                        <Form.Control name="categoryDropdown" as="select" defaultValue="Choose..." 
-                            onChange={this.handleChange}>
-                            <option>Choose...</option>
-                            {this.getCategories()}
-                        </Form.Control>
+                        <Form.Control name="eventCityBox" onChange={this.handleChange} type="text"></Form.Control>
                     </Form.Group>
                 </Form.Group>
                 <Form.Group as={Row} >
@@ -122,20 +96,6 @@ export class CreateEvent extends React.Component{
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Control name="eventPhoneBox" onChange={this.handleChange} type="text"></Form.Control>
-                    </Form.Group>
-                </Form.Group>
-                <Form.Group as={Row}>
-                    <Form.Group as={Col}>
-                        <Form.Label >Start time:</Form.Label>
-                    </Form.Group>
-                    <Form.Group as={Col}>
-                        <Form.Control name="eventStartTimeBox" onChange={this.handleChange} type="text"></Form.Control>
-                    </Form.Group>
-                    <Form.Group as={Col}>
-                        <Form.Label>End time:</Form.Label>
-                    </Form.Group>
-                    <Form.Group as={Col}>
-                        <Form.Control name="eventEndTimeBox" onChange={this.handleChange} type="text"></Form.Control>
                     </Form.Group>
                 </Form.Group>
                 <Form.Group as={Row}>

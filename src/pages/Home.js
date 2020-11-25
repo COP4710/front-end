@@ -57,18 +57,29 @@ export class Home extends React.Component {
         var eventList = this.props.events
         var eventComponents = (
             <div>
-                {eventList.map(event => <EventComponent key={event.eventName} 
-                eventName={event.eventName} eventDescription={event.eventDescription} eventLocation={event.location} 
-                eventStartTime={event.start_time} eventEndTime={event.end_time} eventEmail={event.email}
-                eventPhone={event.phone} eventDate={event.date} eventEndDate={event.end_date}/>)}
+                {eventList.map(event => <EventComponent key={event.eventName} eventName={event.eventName} eventURL={event.eventURL}
+                eventDescription={event.eventDescription} address={event.address} city={event.city} eventEmail={event.email} 
+                eventPhone={event.phone} eventDate={event.date} eventEndDate={event.end_date} 
+                permissionLevel={this.props.permissionLevel} currentUser={this.props.username} eventOwner={event.eventOwner}/>)}
             </div>
         )
+        
+        var homeText = 'Home'
+        if(this.props.loggedState == "true") {
+            // Shows if they are a user, admin, or superadmin
+            homeText += ": " + this.props.permissionLevel
+        }
+
+        var createEvent = null
+        // if statement commented out since we don't have permission levels setup yet
+        //if (this.props.permissionLevel == "User" || this.props.permissionLevel == "Admin")
+            createEvent = <Button onClick={this.handleClick}>Create Event</Button>
 
         return (
             <div>
-                <h1>Home</h1>
+                <h1>{homeText}</h1>
                 <br/>
-                <Button onClick={this.handleClick}>Create Event</Button>
+                {createEvent}
                 <p>What would you like to search by?</p>
                 <Container fluid>
                     <Row>

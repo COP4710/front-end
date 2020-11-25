@@ -62,7 +62,9 @@ export class App extends React.Component {
             <EventNavbar loggedState={this.state.loggedIn} username={this.state.username} onAccountChanged={this.accountChange}/>
             <Switch>
               <Route exact path="/">
-                <Home events={this.state.events}/>
+                <Home 
+                  events={this.state.events} loggedState={this.state.loggedIn} permissionLevel={this.state.permissionLevel}
+                  username={this.state.username}/>
               </Route>
               <Route path="/createevent">
                 <CreateEvent 
