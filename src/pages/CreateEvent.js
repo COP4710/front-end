@@ -31,8 +31,6 @@ export class CreateEvent extends React.Component{
             eventURL: this.state.eventURLBox,
             address: this.state.eventAddressBox,
             city: this.state.eventCityBox,
-            email: this.state.eventEmailBox,
-            phone: this.state.eventPhoneBox,
             date: this.state.eventDateBox,
             end_date: this.state.eventEndDateBox,
             eventOwner: this.props.username,
@@ -82,20 +80,6 @@ export class CreateEvent extends React.Component{
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Control name="eventCityBox" onChange={this.handleChange} type="text"></Form.Control>
-                    </Form.Group>
-                </Form.Group>
-                <Form.Group as={Row} >
-                    <Form.Group as={Col}>
-                        <Form.Label >Email:</Form.Label>
-                    </Form.Group>
-                    <Form.Group as={Col}>
-                        <Form.Control name="eventEmailBox" onChange={this.handleChange} type="text"></Form.Control>
-                    </Form.Group>
-                    <Form.Group as={Col}>
-                        <Form.Label>Phone Number:</Form.Label>
-                    </Form.Group>
-                    <Form.Group as={Col}>
-                        <Form.Control name="eventPhoneBox" onChange={this.handleChange} type="text"></Form.Control>
                     </Form.Group>
                 </Form.Group>
                 <Form.Group as={Row}>

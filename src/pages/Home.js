@@ -57,9 +57,9 @@ export class Home extends React.Component {
         var eventList = this.props.events
         var eventComponents = (
             <div>
-                {eventList.map(event => <EventComponent key={event.eventName} eventName={event.eventName} eventURL={event.eventURL}
-                eventDescription={event.eventDescription} address={event.address} city={event.city} eventEmail={event.email} 
-                eventPhone={event.phone} eventDate={event.date} eventEndDate={event.end_date} 
+                {eventList.map(event => <EventComponent key={event.eventName} eventName={event.eventName} 
+                eventURL={event.eventURL} eventDescription={event.eventDescription} address={event.address} 
+                city={event.city} eventDate={event.date} eventEndDate={event.end_date} 
                 permissionLevel={this.props.permissionLevel} currentUser={this.props.username} eventOwner={event.eventOwner}/>)}
             </div>
         )
@@ -75,6 +75,20 @@ export class Home extends React.Component {
         //if (this.props.permissionLevel == "User" || this.props.permissionLevel == "Admin")
             createEvent = <Button onClick={this.handleClick}>Create Event</Button>
 
+        var formOptions = [<option>Date</option>, <option>City</option>]
+        /* statements commented out since we don't have permission levels setup yet
+        if (this.props.permissionLevel == "Admin")
+        {
+            formOptions.push(<option>My Events</option>)
+            formOptions.push(<option>My Active Events</option>)
+        }
+        if (this.props.permissionLevel == "SuperAdmin")
+        {
+            formOptions.push(<option>Admin</option>)
+            formOptions.push(<option>Participant</option>)
+        }
+        */
+
         return (
             <div>
                 <h1>{homeText}</h1>
@@ -87,8 +101,7 @@ export class Home extends React.Component {
                             <InputGroup className="mb-3">
                                 <InputGroup.Prepend>
                                     <Form.Control name="SearchType" as="select" defaultValue="Date" onChange={this.onChange}>
-                                        <option>Date</option>
-                                        <option>Location</option>
+                                        {formOptions}
                                     </Form.Control>
                                 </InputGroup.Prepend>
                                     <FormControl aria-label="Default" 

@@ -35,7 +35,6 @@ export class EventComponent extends React.Component {
                 <Card.Body>
                     <Card.Text>Description: {this.props.eventDescription}</Card.Text>
                     <Card.Text>Event Dates: {this.props.eventDate} - {this.props.eventEndDate}</Card.Text>
-                    <Card.Text>Contact through email at "{this.props.eventEmail}" or call "{this.props.eventPhone}"</Card.Text>
                     <Card.Text>Link to Event Page: {this.props.eventURL}</Card.Text>
                     {eventButton}
                 </Card.Body>
