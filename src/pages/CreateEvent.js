@@ -4,13 +4,15 @@ import React, { Component } from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
+import baseAPI from '../util/path.js'
 
 export class CreateEvent extends React.Component{
     constructor(props){
         super(props)
 
         this.state = {
-            redirect: false
+            redirect: false,
+            eventCreated: false
         }
 
         this.handleOnClickSubmit = this.handleOnClickSubmit.bind(this)
@@ -25,28 +27,56 @@ export class CreateEvent extends React.Component{
     handleOnClickSubmit () {
         // axios.post()
 
+        // Express Params
+        // var title = req.body.title;
+        // var description = req.body.description;
+        // var url = req.body.url;
+        // var start_date = req.body.start_date;
+        // var end_date = req.body.end_date;
+        // var address = req.body.address;
+        // var city = req.body.city;
+        // var host_username = req.body.host_username;
+
         var dataOut = {
-            eventName: this.state.eventNameBox,
-            eventDescription: this.state.eventDescriptionBox,
-            eventURL: this.state.eventURLBox,
+            title: this.state.eventNameBox,
+            description: this.state.eventDescriptionBox,
+            url: this.state.eventURLBox,
             address: this.state.eventAddressBox,
             city: this.state.eventCityBox,
-            date: this.state.eventDateBox,
+            start_date: this.state.eventStartDateBox,
             end_date: this.state.eventEndDateBox,
-            eventOwner: this.props.username,
+            host_username: this.props.username
         }
 
         this.props.onEventCreated(dataOut)
-
-        this.setState({redirect: true})
+        axios.post(baseAPI + "event/add-event", dataOut)
+        .then(res => {
+            console.log(res)
+            if(res.status == 201){
+                console.log("Error")
+            } else {
+                this.setState({
+                    eventCreated: true
+                })
+                this.setState({redirect: true})
+            }
+        })
+        
     }
 
     render() {
     if(this.state.redirect)
         return <Redirect to='/'/>
+    
+    var eventCreatedLabel = null
+    if(this.state.eventCreated == true) {
+        eventCreatedLabel = <Form.Label>Event has been created!</Form.Label>
+    }
 
     return (
         <div className="create-appoint-section border border-dark">
+            {eventCreatedLabel}
+            <br/>
             <h1>Request an Event</h1>
             <br/>
             <Form>
@@ -87,7 +117,7 @@ export class CreateEvent extends React.Component{
                         <Form.Label >Start date:</Form.Label>
                     </Form.Group>
                     <Form.Group as={Col}>
-                        <Form.Control name="eventDateBox" onChange={this.handleChange} type="text"></Form.Control>
+                        <Form.Control name="eventStartDateBox" onChange={this.handleChange} type="text"></Form.Control>
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label >End date:</Form.Label>

@@ -1,2 +1,2 @@
-const baseAPI = "127.0.0.1:8081/"
+const baseAPI = "http://127.0.0.1:8081/"
 export default baseAPI
