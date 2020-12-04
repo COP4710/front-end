@@ -88,6 +88,24 @@ export class Home extends React.Component {
             formOptions.push(<option>Participant</option>)
         }
         */
+        
+        var searchBox;
+        if(this.state.SearchType == "Date") {
+            searchBox = <>
+                <Form.Label>Start Date</Form.Label>  
+                <FormControl aria-label="Default" 
+                                    aria-describedby="inputGroup-sizing-default"
+                                    />
+                <Form.Label>End Date</Form.Label>  
+                <FormControl aria-label="Default" 
+                                    aria-describedby="inputGroup-sizing-default"
+                                    />
+            </>
+        } else if(this.state.SearchType == "City"){
+            searchBox = <FormControl aria-label="Default" 
+                                    aria-describedby="inputGroup-sizing-default"
+                                    />
+        }
 
         return (
             <div>
@@ -104,9 +122,7 @@ export class Home extends React.Component {
                                         {formOptions}
                                     </Form.Control>
                                 </InputGroup.Prepend>
-                                    <FormControl aria-label="Default" 
-                                    aria-describedby="inputGroup-sizing-default"
-                                    />
+                                    {searchBox}
                             </InputGroup>
                         </Col>
                         <Col>
