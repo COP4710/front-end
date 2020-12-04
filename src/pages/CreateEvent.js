@@ -48,6 +48,16 @@ export class CreateEvent extends React.Component{
             host_username: this.props.username
         }
 
+        // const dataOutUsername = {
+        //     "username": "test",
+        //     "password": "test"
+        // }
+
+        // axios.post(baseAPI + "user/add-user", dataOutUsername)
+        // .then(res => {
+        //     console.log(res)
+        // })        
+
         this.props.onEventCreated(dataOut)
         axios.post(baseAPI + "event/add-event", dataOut)
         .then(res => {
