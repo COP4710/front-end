@@ -31,19 +31,16 @@ export class App extends React.Component {
     if(dataIn.login == true || localStorage.getItem('login') == true) {
       localStorage.setItem('login', true)
       localStorage.setItem('username', dataIn.username)
-      localStorage.setItem('password', dataIn.password)
       localStorage.setItem('permissionLevel', dataIn.permissionLevel)
 
     } else {
       localStorage.setItem('login', false)
       localStorage.removeItem('username')
-      localStorage.removeItem('password')
       localStorage.removeItem('permissionLevel')
     }
 
     this.setState({loggedIn: localStorage.getItem('login')})
     this.setState({username: localStorage.getItem('username')})
-    this.setState({password: localStorage.getItem('password')})
     this.setState({permissionLevel: localStorage.getItem('permissionLevel')})
   }
 

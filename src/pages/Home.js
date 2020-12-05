@@ -54,13 +54,29 @@ export class Home extends React.Component {
         //                     <option>Test</option>
         //                 </FormControl>
         // }
+
+
+        // var dataOut = {
+        //     title: this.state.eventNameBox,
+        //     description: this.state.eventDescriptionBox,
+        //     url: this.state.eventURLBox,
+        //     address: this.state.eventAddressBox,
+        //     city: this.state.eventCityBox,
+        //     start_date: this.state.eventStartDateBox,
+        //     end_date: this.state.eventEndDateBox,
+        //     host_username: this.props.username
+        // }
+
+        // Add in Event ID from Database
+        // Keys should be event ID for event components
+        // axios.get call -> give the list of events for that query, change key for event.id
         var eventList = this.props.events
         var eventComponents = (
             <div>
-                {eventList.map(event => <EventComponent key={event.eventName} eventName={event.eventName} 
-                eventURL={event.eventURL} eventDescription={event.eventDescription} address={event.address} 
-                city={event.city} eventDate={event.date} eventEndDate={event.end_date} 
-                permissionLevel={this.props.permissionLevel} currentUser={this.props.username} eventOwner={event.eventOwner}/>)}
+                {eventList.map(event => <EventComponent key={event.title} title={event.title} 
+                url={event.url} description={event.description} address={event.address} 
+                city={event.city} start_date={event.start_date} end_date={event.end_date} 
+                permissionLevel={this.props.permissionLevel} current_user={this.props.username} host_username={event.eventOwner}/>)}
             </div>
         )
         
@@ -72,22 +88,22 @@ export class Home extends React.Component {
 
         var createEvent = null
         // if statement commented out since we don't have permission levels setup yet
-        //if (this.props.permissionLevel == "User" || this.props.permissionLevel == "Admin")
+        if (this.props.permissionLevel == "p" || this.props.permissionLevel == "a" || this.props.permissionLevel == "s")
             createEvent = <Button onClick={this.handleClick}>Create Event</Button>
 
         var formOptions = [<option>Date</option>, <option>City</option>]
-        /* statements commented out since we don't have permission levels setup yet
-        if (this.props.permissionLevel == "Admin")
+        // statements commented out since we don't have permission levels setup yet
+        if (this.props.permissionLevel == "a")
         {
             formOptions.push(<option>My Events</option>)
             formOptions.push(<option>My Active Events</option>)
         }
-        if (this.props.permissionLevel == "SuperAdmin")
+        if (this.props.permissionLevel == "s")
         {
             formOptions.push(<option>Admin</option>)
             formOptions.push(<option>Participant</option>)
         }
-        */
+        
         
         var searchBox;
         if(this.state.SearchType == "Date") {

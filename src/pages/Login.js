@@ -37,12 +37,6 @@ export class Login extends React.Component{
         this.setState({register: regisVal})
 
         if(event.target.name == "LoginButton") {
-            const data = {
-                login: true,
-                username: this.state.usernameBox,
-                password: this.state.passwordBox
-            }
-
             var dataOut = {
                 "username": this.state.usernameBox,
                 "password": this.state.passwordBox
@@ -53,6 +47,16 @@ export class Login extends React.Component{
                 axios.post(baseAPI + "user/login", dataOut)
                 .then(res => {
                 console.log(res)
+                    if(res.status == 200) {
+                        const data = {
+                            login: true,
+                            username: this.state.usernameBox,
+                            permissionLevel: res.user_role
+                        }
+
+                        this.props.onAccountChanged(data);
+                        this.setState({redirect: true})
+                    }
                 })  
             }
             // if true, then create user endpoint
@@ -60,15 +64,21 @@ export class Login extends React.Component{
                 axios.post(baseAPI + "user/add-user", dataOut)
                 .then(res => {
                 console.log(res)
+                    if(res.status == 200) {
+                        const data = {
+                            login: true,
+                            username: this.state.usernameBox,
+                            permissionLevel: "p"
+                        }
+
+                        this.props.onAccountChanged(data);
+                        this.setState({redirect: true})
+                    }
                 })        
             }
 
-            this.props.onAccountChanged(data);
-
             this.setState({usernameBox: ""})
             this.setState({passwordBox: ""})
-
-            this.setState({redirect: true})
         }
     }
 
