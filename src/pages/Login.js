@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
+import baseAPI from '../util/path.js'
 
 export class Login extends React.Component{
     constructor(props){
@@ -42,8 +43,25 @@ export class Login extends React.Component{
                 password: this.state.passwordBox
             }
 
+            var dataOut = {
+                "username": this.state.usernameBox,
+                "password": this.state.passwordBox
+            }
+
             // if this.state.register is false, then login endpoint
+            if (this.state.register == false) {
+                axios.post(baseAPI + "user/login", dataOut)
+                .then(res => {
+                console.log(res)
+                })  
+            }
             // if true, then create user endpoint
+            if (this.state.register == true) {
+                axios.post(baseAPI + "user/add-user", dataOut)
+                .then(res => {
+                console.log(res)
+                })        
+            }
 
             this.props.onAccountChanged(data);
 
