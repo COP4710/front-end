@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Tab, Button } from 'react-bootstrap'
 import Card from 'react-bootstrap/Card'
+import axios from 'axios'
+import baseAPI from '../util/path.js'
 
 export class EventComponent extends React.Component {
     constructor(props){
@@ -10,18 +12,30 @@ export class EventComponent extends React.Component {
     onClick = event => {
         if (event.target.name == "JoinButton")
         {
-            // var event_id = req.body.event_id;
-            // var user_id = req.body.user_id;
+            var dataOut = {
+                "event_id": this.props.event_id,
+                "user_username": this.props.currentUser
+            }
 
-            //this.props.key = event.id
-            //this.props.currentUser
-            //axios.post call for join event -> send it the event id & username
-
+            axios.post(baseAPI + "event/join-event", dataOut)
+            .then(res => {
+            if (res.status == 200){
+                console.log("We did it")
+            }})
         }
 
         if (event.target.name == "DeleteButton")
         {
-            // remove event from event list
+            var dataOut = {
+                "event_id": this.props.event_id
+            }
+            console.log(dataOut)
+
+            axios.post(baseAPI + "event/delete-event", dataOut)
+            .then(res => {
+            if (res.status == 200){
+                console.log("We did it")
+            }})
         }
     }
 
@@ -52,7 +66,7 @@ export class EventComponent extends React.Component {
                 <Card.Title>{this.props.title} at {this.props.address}, {this.props.city}</Card.Title>
                 <Card.Body>
                     <Card.Text>Description: {this.props.description}</Card.Text>
-                    <Card.Text>Event Dates: {this.props.start_date} - {this.props.end_date}</Card.Text>
+                    <Card.Text>Event Dates: {this.props.start_date} to {this.props.end_date}</Card.Text>
                     <Card.Text>Link to Event Page: {this.props.url}</Card.Text>
                     {eventJoinButton}
                     {eventDeleteButton}

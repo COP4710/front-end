@@ -6,6 +6,8 @@ import EventComponent from '../components/EventComponent'
 import '../App.css';
 import { Redirect } from 'react-router-dom';
 import { Col, Container, Form, Row } from 'react-bootstrap'
+import axios from 'axios'
+import baseAPI from '../util/path.js'
 
 export class Home extends React.Component {
 
@@ -14,11 +16,13 @@ export class Home extends React.Component {
 
         this.state = {
             redirect: false,
-            SearchType: "Date"
+            SearchType: "Date",
+            eventList: new Array
         }
 
         this.handleClick = this.handleClick.bind(this)
         this.onChange = this.onChange.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
 
     handleClick() {
@@ -30,6 +34,69 @@ export class Home extends React.Component {
     onChange = event => {
         var value = event.target.value
         this.setState({[event.target.name]: value})
+    }
+
+    handleChange = event => {
+        var value = event.target.value
+        this.setState({[event.target.name]: value})
+    }
+
+    onSearchClick = event => {
+        if (this.state.SearchType == "Date") {
+            var dataOut = {
+                "start_date": this.state.startDateBox,
+                "end_date": this.state.endDateBox
+            }
+
+            var searchPostType = "event/filter-date"
+        }
+
+        else if (this.state.SearchType == "City") {
+            var dataOut = {
+                "city": this.state.eventSearchBox
+            }
+
+            var searchPostType = "event/filter-city"
+        }
+
+        // else if (this.state.SearchType == "My Events") {
+        //     var dataOut = {
+        //         "city": this.state.eventSearchBox
+        //     }
+
+        //     var searchPostType = "event/filter-city"
+        // }
+
+        // else if (this.state.SearchType == "My Active Events") {
+        //     var dataOut = {
+        //         "city": this.state.eventSearchBox
+        //     }
+
+        //     var searchPostType = "event/filter-city"
+        // }
+
+        else if (this.state.SearchType == "Admin") {
+            var dataOut = {
+                "host_username": this.state.eventSearchBox
+            }
+
+            var searchPostType = "event/search-admin"
+        }
+
+        else if (this.state.SearchType == "Participant") {
+            var dataOut = {
+                "user_username": this.state.eventSearchBox
+            }
+
+            var searchPostType = "event/search-user"
+        }
+
+        axios.post(baseAPI + searchPostType, dataOut)
+        .then(res => {
+        if (res.status == 200){
+            var tempEventList = res.data.data
+            this.setState({eventList: tempEventList})
+        }})
     }
 
     render() {
@@ -70,16 +137,21 @@ export class Home extends React.Component {
         // Add in Event ID from Database
         // Keys should be event ID for event components
         // axios.get call -> give the list of events for that query, change key for event.id
-        var eventList = this.props.events
-        var eventComponents = (
+
+        console.log(this.state.eventList)
+
+        try{var eventComponents = (
             <div>
-                {eventList.map(event => <EventComponent key={event.title} title={event.title} 
-                url={event.url} description={event.description} address={event.address} 
+                {this.state.eventList.map(event => <EventComponent event_id={event.event_id} title={event.title} 
+                url={event.event_homepage} description={event.description} address={event.address} 
                 city={event.city} start_date={event.start_date} end_date={event.end_date} 
-                permissionLevel={this.props.permissionLevel} current_user={this.props.username} host_username={event.eventOwner}/>)}
+                permissionLevel={this.props.permissionLevel} current_user={this.props.username} host_username={event.host_username}/>)}
             </div>
-        )
+        )}
+        catch(err){}
         
+        console.log(eventComponents)
+
         var homeText = 'Home'
         if(this.props.loggedState == "true") {
             // Shows if they are a user, admin, or superadmin
@@ -109,17 +181,23 @@ export class Home extends React.Component {
         if(this.state.SearchType == "Date") {
             searchBox = <>
                 <Form.Label>Start Date</Form.Label>  
-                <FormControl aria-label="Default" 
+                <Form.Control aria-label="Default" 
                                     aria-describedby="inputGroup-sizing-default"
+                                    name="startDateBox"
+                                    onChange={this.handleChange}
                                     />
                 <Form.Label>End Date</Form.Label>  
-                <FormControl aria-label="Default" 
+                <Form.Control aria-label="Default" 
                                     aria-describedby="inputGroup-sizing-default"
+                                    name="endDateBox"
+                                    onChange={this.handleChange}
                                     />
             </>
-        } else if(this.state.SearchType == "City"){
-            searchBox = <FormControl aria-label="Default" 
+        } else if(this.state.SearchType != "Date"){
+            searchBox = <Form.Control aria-label="Default" 
                                     aria-describedby="inputGroup-sizing-default"
+                                    name="eventSearchBox"
+                                    onChange={this.handleChange}
                                     />
         }
 
@@ -142,7 +220,7 @@ export class Home extends React.Component {
                             </InputGroup>
                         </Col>
                         <Col>
-                            <Button>Search</Button>
+                            <Button onClick={this.onSearchClick}>Search</Button>
                         </Col>
                     </Row>
                 </Container>
