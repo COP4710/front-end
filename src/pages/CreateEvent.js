@@ -12,7 +12,7 @@ export class CreateEvent extends React.Component{
 
         this.state = {
             redirect: false,
-            eventCreated: false
+            eventConflict: false
         }
 
         this.handleOnClickSubmit = this.handleOnClickSubmit.bind(this)
@@ -64,10 +64,12 @@ export class CreateEvent extends React.Component{
             console.log(res)
             if(res.status == 201){
                 console.log("Error")
-            } else {
+            } else if(res.data.approved == false){
                 this.setState({
-                    eventCreated: true
+                    eventConflict: true
                 })
+                this.setState({redirect: true})
+            } else if(res.data.approved == true){
                 this.setState({redirect: true})
             }
         })
@@ -78,14 +80,14 @@ export class CreateEvent extends React.Component{
     if(this.state.redirect)
         return <Redirect to='/'/>
     
-    var eventCreatedLabel = null
-    if(this.state.eventCreated == true) {
-        eventCreatedLabel = <Form.Label>Event has been created!</Form.Label>
+    var eventConflictLabel = null
+    if(this.state.eventConflict == true) {
+        eventConflictLabel = <Form.Label>Conflict was found, reschedule event.</Form.Label>
     }
 
     return (
         <div className="create-appoint-section border border-dark">
-            {eventCreatedLabel}
+            {eventConflictLabel}
             <br/>
             <h1>Request an Event</h1>
             <br/>

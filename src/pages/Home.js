@@ -42,6 +42,9 @@ export class Home extends React.Component {
     }
 
     onSearchClick = event => {
+
+        // Participant Level
+
         if (this.state.SearchType == "Date") {
             var dataOut = {
                 "start_date": this.state.startDateBox,
@@ -59,21 +62,35 @@ export class Home extends React.Component {
             var searchPostType = "event/filter-city"
         }
 
-        // else if (this.state.SearchType == "My Events") {
-        //     var dataOut = {
-        //         "city": this.state.eventSearchBox
-        //     }
+        else if (this.state.SearchType == "Joined Events" && this.props.username != NULL) {
+            var dataOut = {
+                "user_username": this.props.username
+            }
 
-        //     var searchPostType = "event/filter-city"
-        // }
+            var searchPostType = "event/search-user"
+        }
 
-        // else if (this.state.SearchType == "My Active Events") {
-        //     var dataOut = {
-        //         "city": this.state.eventSearchBox
-        //     }
+        // Admin Level
 
-        //     var searchPostType = "event/filter-city"
-        // }
+        else if (this.state.SearchType == "My Events" && this.props.username != NULL) {
+            var dataOut = {
+                "host_username": this.props.username
+            }
+
+            var searchPostType = "event/search-admin"
+        }
+
+
+        // Same thing as above but date check needs to be implemented in axios
+        else if (this.state.SearchType == "My Active Events") {
+            var dataOut = {
+                "host_username": this.props.username
+            }
+
+            var searchPostType = "event/search-admin"
+        }
+        
+        // Super Admin Level
 
         else if (this.state.SearchType == "Admin") {
             var dataOut = {
@@ -95,6 +112,9 @@ export class Home extends React.Component {
         .then(res => {
         if (res.status == 200){
             var tempEventList = res.data.data
+            if(this.state.SearchType == "My Active Events") {
+                // Go through event list and remove events that are in the past
+            }
             this.setState({eventList: tempEventList})
         }})
     }
@@ -165,6 +185,10 @@ export class Home extends React.Component {
 
         var formOptions = [<option>Date</option>, <option>City</option>]
         // statements commented out since we don't have permission levels setup yet
+        if (this.props.permissionLevel == "p")
+        {
+            formOptions.push(<option>Joined Events</option>)
+        }
         if (this.props.permissionLevel == "a")
         {
             formOptions.push(<option>My Events</option>)
@@ -193,7 +217,10 @@ export class Home extends React.Component {
                                     onChange={this.handleChange}
                                     />
             </>
-        } else if(this.state.SearchType != "Date"){
+        } else if(this.state.SearchType == "My Events" || this.state.SearchType == "Joined Events" ||
+                    this.state.SearchType == "My Active Events") {
+            searchBox = null
+        }else {
             searchBox = <Form.Control aria-label="Default" 
                                     aria-describedby="inputGroup-sizing-default"
                                     name="eventSearchBox"
