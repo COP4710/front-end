@@ -62,7 +62,7 @@ export class Home extends React.Component {
             var searchPostType = "event/filter-city"
         }
 
-        else if (this.state.SearchType == "Joined Events" && this.props.username != NULL) {
+        else if (this.state.SearchType == "Joined Events" && this.props.username != null) {
             var dataOut = {
                 "user_username": this.props.username
             }
@@ -72,7 +72,7 @@ export class Home extends React.Component {
 
         // Admin Level
 
-        else if (this.state.SearchType == "My Events" && this.props.username != NULL) {
+        else if (this.state.SearchType == "My Events" && this.props.username != null) {
             var dataOut = {
                 "host_username": this.props.username
             }

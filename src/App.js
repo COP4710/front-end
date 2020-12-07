@@ -20,6 +20,7 @@ export class App extends React.Component {
     this.state = {
       loggedIn: localStorage.getItem('login'),
       username: localStorage.getItem('username'),
+      permissionLevel: localStorage.getItem('permissionLevel'),
       events: []
     }
 
@@ -32,7 +33,6 @@ export class App extends React.Component {
       localStorage.setItem('login', true)
       localStorage.setItem('username', dataIn.username)
       localStorage.setItem('permissionLevel', dataIn.permissionLevel)
-
     } else {
       localStorage.setItem('login', false)
       localStorage.removeItem('username')
@@ -51,7 +51,7 @@ export class App extends React.Component {
   }
 
   render() {
-
+    console.log("in app.js " + this.state.permissionLevel)
     console.log(this.state.events)
     return (
       <Router>

@@ -35,6 +35,8 @@ export class EventNavbar extends React.Component {
         var welcomeText = 'Welcome'
         if(this.props.loggedState == "true") {
             welcomeText += " " + this.props.username
+            console.log("Logged State: " + this.props.loggedState)
+            console.log(this.props.username)
         }
         welcomeText += "!"
 

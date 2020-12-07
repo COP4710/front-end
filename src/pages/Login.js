@@ -51,7 +51,7 @@ export class Login extends React.Component{
                         const data = {
                             login: true,
                             username: this.state.usernameBox,
-                            permissionLevel: res.user_role
+                            permissionLevel: res.data.role
                         }
 
                         this.props.onAccountChanged(data);
@@ -77,8 +77,8 @@ export class Login extends React.Component{
                 })        
             }
 
-            this.setState({usernameBox: ""})
-            this.setState({passwordBox: ""})
+            // this.setState({usernameBox: ""})
+            // this.setState({passwordBox: ""})
         }
     }
 

@@ -7,14 +7,19 @@ import baseAPI from '../util/path.js'
 export class EventComponent extends React.Component {
     constructor(props){
         super(props)
+
+        this.state = {
+            "event_id": this.props.event_id,
+            "user": this.props.curret_user
+        }
     }
 
     onClick = event => {
         if (event.target.name == "JoinButton")
         {
             var dataOut = {
-                "event_id": this.props.event_id,
-                "user_username": this.props.currentUser
+                "event_id": this.state.event_id,
+                "user_username": this.state.user
             }
 
             axios.post(baseAPI + "event/join-event", dataOut)
@@ -27,7 +32,7 @@ export class EventComponent extends React.Component {
         if (event.target.name == "DeleteButton")
         {
             var dataOut = {
-                "event_id": this.props.event_id
+                "event_id": this.state.event_id
             }
             console.log(dataOut)
 
@@ -46,7 +51,7 @@ export class EventComponent extends React.Component {
              // need to check to make sure the user isn't already signed up
             eventJoinButton = <Button name="JoinButton" href="/"
                         variant="primary" onClick={this.onClick}>Join</Button>
-        if (this.props.currentUser == this.props.host_username)
+        if (this.state.user == this.props.host_username)
             eventDeleteButton = <Button name="DeleteButton" href="/"
                 variant="primary" onClick={this.onClick}>Delete</Button>
 
