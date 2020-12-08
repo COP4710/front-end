@@ -12,9 +12,7 @@ export class Login extends React.Component{
 
         this.state = {
             redirect: false,
-            register: false,
-            usernameBox: "",
-            passwordBox: ""
+            register: false
         }
 
         this.handleChange = this.handleChange.bind(this)

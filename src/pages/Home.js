@@ -159,13 +159,25 @@ export class Home extends React.Component {
         // axios.get call -> give the list of events for that query, change key for event.id
 
         console.log(this.state.eventList)
-
+        var today = new Date()
         try{var eventComponents = (
             <div>
-                {this.state.eventList.map(event => <EventComponent event_id={event.event_id} title={event.title} 
-                url={event.event_homepage} description={event.description} address={event.address} 
-                city={event.city} start_date={event.start_date} end_date={event.end_date} 
-                permissionLevel={this.props.permissionLevel} current_user={this.props.username} host_username={event.host_username}/>)}
+                {this.state.eventList.map(event => {
+                        if(this.state.SearchType == "My Active Events"){
+                            if(new Date() <= new Date(event.end_date)) {
+                                return <EventComponent key={event.event_id} event_id={event.event_id} title={event.title} 
+                                    url={event.event_homepage} description={event.description} address={event.address} 
+                                    city={event.city} start_date={event.start_date} end_date={event.end_date} 
+                                    permissionLevel={this.props.permissionLevel} current_user={this.props.username} host_username={event.host_username} email={this.state.emailAddress}/>
+                            }
+                        } else {
+                            return <EventComponent key={event.event_id} event_id={event.event_id} title={event.title} 
+                                url={event.event_homepage} description={event.description} address={event.address} 
+                                city={event.city} start_date={event.start_date} end_date={event.end_date} 
+                                permissionLevel={this.props.permissionLevel} current_user={this.props.username} host_username={event.host_username} email={this.state.emailAddress}/>
+                        }
+                    })
+                }
             </div>
         )}
         catch(err){}
@@ -232,6 +244,8 @@ export class Home extends React.Component {
             <div>
                 <h1>{homeText}</h1>
                 <br/>
+                <h2>If you would like an email sent to you, enter your email here</h2>
+                <Form.Control type="text" name="emailAddress" onChange={this.onChange}/>
                 {createEvent}
                 <p>What would you like to search by?</p>
                 <Container fluid>
